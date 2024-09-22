@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
             ],
           ),
         ),
+        bottomNavigationBar: const CustomFooter(),
       ),
     );
   }
@@ -178,7 +179,7 @@ class PopularItems extends StatelessWidget {
         price: '\$13.49',
         imgpath: 'https://via.placeholder.com/150'),
     Food(
-        name: 'Cheesy Fries',
+        name: 'Cheesyjew09j0fej0jf0je0j0iefj0ifjew0j Fries',
         price: '\$7.49',
         imgpath: 'https://via.placeholder.com/150'),
   ];
@@ -285,8 +286,9 @@ class PopularItems extends StatelessWidget {
 
 class ComboDealPage extends StatelessWidget {
   final List<Food> comboDeals = [
-    Food(name: 'Combo Deal 1', price: '\$19.99', imgpath: 'assets/combo1.png'),
-    Food(name: 'Combo Deal 2', price: '\$24.99', imgpath: 'assets/combo2.png'),
+    Food(
+        name: 'Combo Deal 1', price: '\$19.99', imgpath: 'assets/fingers1.png'),
+    Food(name: 'Combo Deal 2', price: '\$24.99', imgpath: 'assets/nacho.png'),
     Food(name: 'Combo Deal 3', price: '\$29.99', imgpath: 'assets/combo3.png'),
     // Add more combo deals as needed
   ];
@@ -295,9 +297,13 @@ class ComboDealPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final cardWidth = screenWidth * 0.7; // Adjusted to 70% to avoid overflow
-    const maxCardWidth = 400.0; // Max width of each card
+    final screenWidth = 400;
+    const maxCardWidth = 300.0; // Max width of each card
+
+    // Dynamically set image size based on screen width
+    double imageWidth =
+        screenWidth * 0.5; // Image width is 30% of the screen width
+    double imageHeight = imageWidth * 0.75; // Maintain aspect ratio
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 20.0),
@@ -316,15 +322,16 @@ class ComboDealPage extends StatelessWidget {
           ),
           const SizedBox(height: 10), // Spacing between title and card list
           SizedBox(
-            height: 200, // Adjusted height to accommodate images and names
+            height: imageHeight +
+                40, // Dynamic height based on image size and padding
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: comboDeals.length,
               itemBuilder: (context, index) {
                 return Container(
-                  width: cardWidth > maxCardWidth
-                      ? maxCardWidth
-                      : cardWidth, // Responsive with max width
+                  width: maxCardWidth < screenWidth * 0.8
+                      ? screenWidth * 0.8
+                      : maxCardWidth, // Max width of the card
                   margin: const EdgeInsets.symmetric(
                       horizontal: 8), // Add margin between cards
                   child: Card(
@@ -342,8 +349,8 @@ class ComboDealPage extends StatelessWidget {
                           child: Image.asset(
                             comboDeals[index].imgpath,
                             fit: BoxFit.cover,
-                            width: 150, // Fixed width for the image
-                            height: double.infinity, // Stretch height to full
+                            width: imageWidth, // Dynamic width for the image
+                            height: imageHeight, // Dynamic height for the image
                           ),
                         ),
                         const SizedBox(
@@ -361,6 +368,7 @@ class ComboDealPage extends StatelessWidget {
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
+                                  softWrap: true, // Allow text to wrap
                                 ),
                                 const SizedBox(
                                     height:
@@ -369,9 +377,9 @@ class ComboDealPage extends StatelessWidget {
                                   comboDeals[index].price,
                                   style: const TextStyle(
                                     fontSize: 14,
-                                    color: Color.fromARGB(255, 0, 0,
-                                        0), // Lighter color for price
+                                    color: Colors.black, // Text color for price
                                   ),
+                                  softWrap: true, // Allow price to wrap
                                 ),
                               ],
                             ),
@@ -385,6 +393,48 @@ class ComboDealPage extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class CustomFooter extends StatelessWidget {
+  const CustomFooter({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+      color: Colors.red, // Set footer color to red
+      shape: const CircularNotchedRectangle(), // Optional, to give notch effect
+      child: SizedBox(
+        height: 60, // Set height for the footer
+        child: Row(
+          mainAxisAlignment:
+              MainAxisAlignment.spaceBetween, // Space icons apart
+          children: [
+            IconButton(
+              icon: const Icon(Icons.menu),
+              color: Colors.white,
+              onPressed: () {
+                // Define menu button functionality
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.fastfood),
+              color: Colors.white,
+              onPressed: () {
+                // Define food icon functionality
+              },
+            ),
+            IconButton(
+              icon: const Icon(Icons.shopping_cart),
+              color: Colors.white,
+              onPressed: () {
+                // Define shopping cart functionality
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
